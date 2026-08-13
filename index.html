@@ -605,6 +605,8 @@ function REPORT_TEMPLATE(o){
   .pg-shot-legend span{display:inline-flex;align-items:center;gap:6px;}
   .pg-dot{width:9px;height:9px;border-radius:2px;display:inline-block;}
   .pg-dot.immediate{background:var(--pg-red);} .pg-dot.thisweek{background:var(--pg-amber);} .pg-dot.monitor{background:#8FA6B8;} .pg-dot.quiet{background:#E4E8E1;}
+  .pg-shot-takeaway{font-family:'IBM Plex Serif',serif;font-style:italic;font-size:12.5px;color:var(--pg-light-slate);border-top:1px solid var(--pg-light-rule);padding-top:12px;margin:14px 0 0;}
+  .pg-shot-fakebtn{display:inline-flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:#fff;background:var(--pg-light-ink);border-radius:8px;padding:8px 14px;margin-top:14px;}
 
   .pg-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:30px;}
   @media (max-width:600px){.pg-stats{grid-template-columns:repeat(2,1fr);}}
@@ -778,12 +780,11 @@ function buildBrochureHtml(){
   const thisWeekCount = heatmapIssues.filter(i => i.severity === 'thisweek').length;
   const monitorCount = heatmapIssues.filter(i => i.severity === 'monitor').length;
   const quietCells = gridTotalCells - heatmapIssues.length;
-  const needYouCount = immediateCount + thisWeekCount;
 
   return REPORT_TEMPLATE({
     reportName: "Monthly Priority Report",
     eyebrowTag: "Time · Priority",
-    badgeText: `${needYouCount} thing${needYouCount === 1 ? '' : 's'} need you`,
+    badgeText: `${thisWeekCount} thing${thisWeekCount === 1 ? '' : 's'} need you`,
     summaryEyebrow: "For the principal — plain-language summary",
     headline: `What actually needs your attention <em>this month?</em>`,
     subhead: "A short, non-technical summary of how every grade and subject is doing — so you know what to look at, and what you can safely ignore.",
@@ -797,7 +798,9 @@ function buildBrochureHtml(){
         <span><span class="pg-dot thisweek"></span>This Week</span>
         <span><span class="pg-dot monitor"></span>Monitor</span>
         <span><span class="pg-dot quiet"></span>Nothing flagged</span>
-      </div>`,
+      </div>
+      <p class="pg-shot-takeaway"><em>${thisWeekCount === 1 ? 'One subject needs' : thisWeekCount + ' subjects need'} this week's attention — everything else on the grid is quiet.</em></p>
+      <div class="pg-shot-fakebtn">⬇ Download Report</div>`,
     screenshotCaption: "This is the actual grid your team sees — each square is one grade + one subject",
     stats: [
       {n: immediateCount, l: "Needs action now", cls: "red"},
@@ -814,7 +817,7 @@ function buildBrochureHtml(){
     flaggedTitle: `The ${heatmapIssues.length} things we flagged, explained simply`,
     flaggedSub: "Ordered from most to least urgent. Each one includes what we suggest doing about it.",
     flaggedCardsHtml: heatmapIssues.map(flagCardHtml).join(''),
-    closingQuote: `"${thisWeekCount + immediateCount} thing${(thisWeekCount+immediateCount)===1?'':'s'} need${(thisWeekCount+immediateCount)===1?'s':''} your attention this month — everything else on the grid is quiet."`,
+    closingQuote: `"${thisWeekCount === 1 ? 'One subject needs' : thisWeekCount + ' subjects need'} this week's attention — everything else on the grid is quiet."`,
     footerText: "Sample data · Greenwood International School · March 2026 — Dronalytics School Pretotype"
   });
 }
