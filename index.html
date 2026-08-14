@@ -553,7 +553,6 @@
 
 <section class="drona-hero drona-explainer">
   <div class="drona-explainer-inner">
-    <div class="drona-eyebrow">Time · Priority</div>
     <h2>You can't read everything that comes in — <em>you shouldn't have to.</em></h2>
     <p>Coordinators, teachers, and reports send more than anyone has time to interpret. This filters all of it down to the few things that actually need you.</p>
     <a class="drona-scroll" href="#viz">See what needs attention ↓</a>
@@ -568,11 +567,11 @@
     <!-- CARD 3B: HEATMAP -->
     <div class="card priority" style="border-top-color:var(--rust);">
       <div class="eyebrow-row">
-        <span class="tag" style="color:var(--rust);background:var(--rust-dim);">Priority · Attention</span>
         <span class="variant-label">Grade × Subject Heatmap</span>
+        <span class="variant-index">Top 5 signals only</span>
       </div>
       <h3>Where your attention is needed, at a glance</h3>
-      <p class="sub">Same five signals, placed on a grid. Hover a cell for the detail behind it.</p>
+      <p class="sub">The 5 highest-priority signals this week — a curated shortlist, not the full grade × subject breakdown. Hover a cell for the detail behind it.</p>
 
       <div class="heatmap-scroll">
         <table class="heat">
@@ -626,7 +625,7 @@
        List flow below, which is the variant built for real school scale. -->
 
 
-<footer>Sample data · Greenwood International School · March 2026 — Dronalytics School Pretotype</footer>
+<footer>Sample data · March 2026 — Dronalytics School Pretotype</footer>
 </div>
 
 
@@ -873,13 +872,12 @@ function buildBrochureHtml(){
 
   return REPORT_TEMPLATE({
     reportName: "Monthly Priority Report",
-    eyebrowTag: "Time · Priority",
     badgeText: `${thisWeekCount} thing${thisWeekCount === 1 ? '' : 's'} need you`,
     summaryEyebrow: "For the principal — plain-language summary",
     headline: `What actually needs your attention <em>this month?</em>`,
     subhead: "A short, non-technical summary of how every grade and subject is doing — so you know what to look at, and what you can safely ignore.",
     calloutHtml: `We checked <strong>${gridTotalCells} grade-and-subject groups</strong> this month — every grade, in every subject. Most are running normally. A small number stood out, so we've pulled those into this report: <strong>${immediateCount} needs action right away</strong>, <strong>${thisWeekCount} are worth a look this week</strong>, and <strong>${monitorCount} are just worth keeping in the back of your mind.</strong> The remaining <strong>${quietCells} groups</strong> have nothing to report — they're doing fine.`,
-    screenshotEyebrow: "Priority · Attention",
+    screenshotEyebrow: "Live Screenshot",
     screenshotTitle: "Where your attention is needed, at a glance",
     screenshotSub: "Same signals, placed on a grid. Each cell is one grade + one subject.",
     screenshotBodyHtml: screenshotGridHtml(),
@@ -908,7 +906,7 @@ function buildBrochureHtml(){
     flaggedSub: "Ordered from most to least urgent. Each one includes what we suggest doing about it.",
     flaggedCardsHtml: heatmapIssues.map(flagCardHtml).join(''),
     closingQuote: `"${thisWeekCount === 1 ? 'One subject needs' : thisWeekCount + ' subjects need'} this week's attention — everything else on the grid is quiet."`,
-    footerText: "Sample data · Greenwood International School · March 2026 — Dronalytics School Pretotype"
+    footerText: "Sample data · March 2026 — Dronalytics School Pretotype"
   });
 }
 
